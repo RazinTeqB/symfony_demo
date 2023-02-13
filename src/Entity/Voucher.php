@@ -4,9 +4,10 @@ namespace App\Entity;
 
 use App\Repository\VoucherRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 #[ORM\Entity(repositoryClass: VoucherRepository::class)]
-class Voucher
+class Voucher implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -46,5 +47,14 @@ class Voucher
         $this->description = $description;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description
+        ];
     }
 }
